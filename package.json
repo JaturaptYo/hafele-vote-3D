@@ -1,13 +1,14 @@
 {
-    "name": "hafele-home-impact",
-    "version": "1.0.0",
-    "description": "Häfele Fullstack Campaign System",
-    "main": "server.js",
-    "scripts": {
-        "start": "node server.js"
-    },
-    "dependencies": {
-        "cors": "^2.8.6",
-        "express": "^4.22.2"
-    }
+  "name": "hafele-home-impact",
+  "version": "2.0.0",
+  "description": "Häfele HOME IMPACT CHALLENGE — Fullstack Campaign System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.2"
+  }
 }
