@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Häfele Home Impact - 3D Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <style>
+         :root {
+            --red: #be1e2d;
+            --blue: #1a252f;
+            --green: #2e7d32;
+            --bg: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Sarabun', sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            color: #2c3e50;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        
+        nav {
+            background: var(--blue);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--red);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(26, 37, 47, 0.85), rgba(26, 37, 47, 0.85)), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 5%;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .sec-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--blue);
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        /* Calculator */
+        
+        .calc-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-top: 6px solid var(--red);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-calc {
+            background: var(--blue);
+            color: white;
+            width: 100%;
+            border: none;
+            padding: 18px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .scorecard {
+            background: linear-gradient(135deg, var(--blue), #2c3e50);
+            color: white;
+            text-align: center;
+            border-left: 8px solid var(--green);
+            display: none;
+        }
+        
+        .score-val {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #f1c40f;
+            margin: 10px 0;
+        }
+        /* Gallery 3D */
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .design-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .gallery-3d-canvas {
+            width: 100%;
+            height: 300px;
+            background: #e0e6ed;
+            position: relative;
+            cursor: grab;
+        }
+        
+        .gallery-3d-canvas:active {
+            cursor: grabbing;
+        }
+        
+        .loading-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        .design-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .design-info h4 {
+            color: var(--blue);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn-vote {
+            background: white;
+            color: var(--red);
+            border: 2px solid var(--red);
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-vote:hover {
+            background: var(--red);
+            color: white;
+        }
+        
+        .btn-details {
+            background: #f8f9fa;
+            color: var(--blue);
+            border: 1px solid #ccc;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: auto;
+        }
+        
+        .btn-details:hover {
+            background: #e0e6ed;
+        }
+        /* Modal (Popup) Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s;
+            overflow: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            background: var(--blue);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close-btn {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .close-btn:hover {
+            color: var(--red);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .product-item {
+            background: #f8f9fa;
+            border-left: 4px solid var(--red);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .product-item h4 {
+            color: var(--red);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .product-item p {
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .savings-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .save-card {
+            flex: 1;
+            min-width: 150px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .save-card i {
+            font-size: 1.5rem;
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+        
+        .save-card h3 {
+            color: var(--green);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .save-card p {
+            font-size: 0.85rem;
+            color: #333;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="#" class="logo">HÄFELE <span>THAILAND</span></a>
+        <div class="nav-links">
+            <a href="#calculator">ประเมินบ้าน</a>
+            <a href="#voting">แกลลอรี่โหวต 3D</a>
+            <a href="liff.html" style="background: var(--green); padding: 8px 20px; border-radius: 30px;">ระบบสมาชิก</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>แคมเปญ "บ้านเดียวเปลี่ยนโลกได้"</h1>
+        <p>ประเมินความคุ้มค่าและลดคาร์บอน จากอุปกรณ์ตกแต่งบ้าน Häfele</p>
+    </header>
+
+    <section id="calculator">
+        <h2 class="sec-title">ประเมิน Carbon ROI (ระยะ 10 ปี)</h2>
+        <div class="calc-wrapper">
+            <div class="card">
+                <label>รูปแบบที่อยู่อาศัย</label>
+                <select id="calc-home" class="form-control">
+                    <option value="1">คอนโดมิเนียม</option>
+                    <option value="1.5">ทาวน์โฮม</option>
+                    <option value="2.5">บ้านเดี่ยว</option>
+                </select>
+                <label>อุปกรณ์ที่ต้องการปรับปรุง</label>
+                <select id="calc-product" class="form-control">
+                    <option value="faucet">ก๊อกน้ำและสุขภัณฑ์</option>
+                    <option value="appliance">เครื่องใช้ไฟฟ้า</option>
+                </select>
+                <button class="btn-calc" onclick="runCalculator()">ประมวลผลความคุ้มค่า</button>
+            </div>
+            <div class="card scorecard" id="scorecardDisplay">
+                <h3 style="color: #4cd137;">บัตรผลคาร์บอนดิจิทัลของคุณ</h3>
+                <div class="score-val" id="res-money">0 ฿</div>
+                <p>ประหยัดค่าไฟ/ค่าน้ำตลอด 10 ปี</p>
+                <div class="score-val" id="res-co2" style="color: white;">0 kg</div>
+                <p>ก๊าซ CO₂ ที่ลดได้</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="voting" style="background: white; max-width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="sec-title">แกลลอรี่โหวต 3D (จากผลงานจริง)</h2>
+            <div class="gallery-grid">
+
+                <div class="design-card">
+                    <div id="canvas-room30" class="gallery-3d-canvas">
+                        <div class="loading-text" id="load-room30">กำลังโหลดโมเดล 3D...</div>
+                    </div>
+                    <div class="design-info">
+                        <h4>Functional Space: Room 30</h4>
+                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;"><i class="fas fa-check" style="color:var(--red);"></i> ระบบก๊อกน้ำและสุขภัณฑ์ประหยัดน้ำ</p>
+                        <button class="btn-details" onclick="openModal('room30')">🔍 ดูรายละเอียดเชิงลึก</button>
+                        <button class="btn-vote" onclick="voteDesign('Room 30')">โหวตผลงานนี้</button>
+                    </div>
+                </div>
+
+                <div class="design-card">
+                    <div id="canvas-room32" class="gallery-3d-canvas">
+                        <div class="loading-text" id="load-room32">กำลังโหลดโมเดล 3D...</div>
+                    </div>
+                    <div class="design-info">
+                        <h4>Functional Space: Room 32</h4>
+                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;"><i class="fas fa-check" style="color:var(--red);"></i> ประตูดิจิทัล & ระบบไฟอัจฉริยะ</p>
+                        <button class="btn-details" onclick="openModal('room32')">🔍 ดูรายละเอียดเชิงลึก</button>
+                        <button class="btn-vote" onclick="voteDesign('Room 32')">โหวตผลงานนี้</button>
+                    </div>
+                </div>
+
+                <div class="design-card">
+                    <div id="canvas-room09" class="gallery-3d-canvas">
+                        <div class="loading-text" id="load-room09">กำลังโหลดโมเดล 3D...</div>
+                    </div>
+                    <div class="design-info">
+                        <h4>Architectural: Room 09</h4>
+                        <p style="font-size: 0.9rem; color: #555; margin-bottom: 15px;"><i class="fas fa-check" style="color:var(--red);"></i> ชุดเครื่องใช้ไฟฟ้าในครัว Eco-friendly</p>
+                        <button class="btn-details" onclick="openModal('room09')">🔍 ดูรายละเอียดเชิงลึก</button>
+                        <button class="btn-vote" onclick="voteDesign('Room 09')">โหวตผลงานนี้</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">รายละเอียดผลงาน</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 20px; color: #666;">ข้อมูลการใช้อุปกรณ์ตกแต่งบ้านของ <strong>Häfele</strong> และผลกระทบเชิงบวกต่อสิ่งแวดล้อม</p>
+
+                <div id="modalProducts">
+                </div>
+
+                <div class="savings-box">
+                    <div class="save-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3 id="modalCO2">0 kg</h3>
+                        <p>ลดการปล่อย CO₂ (ต่อปี)</p>
+                    </div>
+                    <div class="save-card">
+                        <i class="fas fa-piggy-bank" style="color: #f1c40f;"></i>
+                        <h3 id="modalMoney" style="color: #f1c40f;">0 ฿</h3>
+                        <p>ประหยัดเงิน (ต่อปี)</p>
+                    </div>
+                    <div class="save-card">
+                        <i class="fas fa-bolt" style="color: #3498db;" id="energyIcon"></i>
+                        <h3 id="modalEnergy" style="color: #3498db;">0</h3>
+                        <p id="modalEnergyLabel">ประหยัดพลังงาน</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ข้อมูลเชิงลึกของแต่ละห้อง ---
+        const roomDetails = {
+            'room30': {
+                title: 'Functional Space: Room 30 (Duplex)',
+                products: [{
+                    name: 'ก๊อกน้ำเซ็นเซอร์อัจฉริยะ Häfele',
+                    desc: 'ระบบเปิด-ปิดอัตโนมัติ ช่วยลดการใช้น้ำสิ้นเปลืองได้ถึง 40% มี Aerator ผสมอากาศลงในน้ำ ทำให้ใช้น้ำน้อยลงแต่ยังคงความแรง'
+                }, {
+                    name: 'สุขภัณฑ์ประหยัดน้ำแบบ Dual Flush',
+                    desc: 'ใช้น้ำเพียง 3 / 4.5 ลิตรต่อครั้ง ผลิตจากเซรามิกที่ใช้กระบวนการเผาแบบ Low-Carbon'
+                }],
+                co2: '120 kg',
+                money: '1,500 ฿',
+                energy: '15,000 ลิตร',
+                energyLabel: 'ประหยัดน้ำ (ต่อปี)',
+                icon: 'fas fa-tint'
+            },
+            'room32': {
+                title: 'Functional Space: Room 32 (Loft Interior)',
+                products: [{
+                    name: 'Digital Door Lock (PP8100)',
+                    desc: 'ใช้วัสดุอะลูมิเนียมรีไซเคิลในการผลิต แผงวงจรใช้พลังงานต่ำ แบตเตอรี่ใช้งานได้นานกว่ารุ่นทั่วไป 2 เท่า ลดขยะอิเล็กทรอนิกส์'
+                }, {
+                    name: 'ระบบไฟ LED อัจฉริยะ Häfele Loox',
+                    desc: 'หลอดไฟ LED ที่ลดการใช้พลังงานได้ 80% เมื่อเทียบกับหลอดทั่วไป ไม่ปล่อยความร้อน ลดภาระการทำงานของเครื่องปรับอากาศ'
+                }],
+                co2: '85 kg',
+                money: '2,000 ฿',
+                energy: '450 kWh',
+                energyLabel: 'ประหยัดไฟฟ้า (ต่อปี)',
+                icon: 'fas fa-bolt'
+            },
+            'room09': {
+                title: 'Architectural: Room 09 (Appartement)',
+                products: [{
+                    name: 'เตาแม่เหล็กไฟฟ้า Häfele Eco-line',
+                    desc: 'ทำความร้อนเฉพาะจุดที่สัมผัสภาชนะ ไม่สูญเสียความร้อนสู่อากาศภายนอก ประหยัดพลังงานกว่าเตาแก๊สและเตาไฟฟ้าทั่วไป 30%'
+                }, {
+                    name: 'เครื่องดูดควันมอเตอร์ BLDC',
+                    desc: 'มอเตอร์ไร้แปรงถ่าน กินไฟน้อย เสียงเงียบ และมีอายุการใช้งานยาวนานกว่า 10 ปี (เข้าเงื่อนไข Circular Warranty เต็มรูปแบบ)'
+                }],
+                co2: '450 kg',
+                money: '4,200 ฿',
+                energy: '1,200 kWh',
+                energyLabel: 'ประหยัดไฟฟ้า (ต่อปี)',
+                icon: 'fas fa-bolt'
+            }
+        };
+
+        // --- ระบบ Modal (Popup) ---
+        const modal = document.getElementById("detailsModal");
+
+        function openModal(roomId) {
+            const data = roomDetails[roomId];
+
+            document.getElementById('modalTitle').innerText = data.title;
+
+            // สร้างรายการสินค้า
+            let productsHTML = '';
+            data.products.forEach(prod => {
+                productsHTML += `
+                    <div class="product-item">
+                        <h4><i class="fas fa-cube"></i> ${prod.name}</h4>
+                        <p><strong>คุณสมบัติรักษ์โลก:</strong> ${prod.desc}</p>
+                    </div>
+                `;
+            });
+            document.getElementById('modalProducts').innerHTML = productsHTML;
+
+            // อัปเดตตัวเลข
+            document.getElementById('modalCO2').innerText = data.co2;
+            document.getElementById('modalMoney').innerText = data.money;
+            document.getElementById('modalEnergy').innerText = data.energy;
+            document.getElementById('modalEnergyLabel').innerText = data.energyLabel;
+
+            // เปลี่ยน Icon น้ำ/ไฟ
+            const iconEl = document.getElementById('energyIcon');
+            iconEl.className = data.icon;
+            if (data.icon.includes('tint')) {
+                iconEl.style.color = '#3498db';
+                document.getElementById('modalEnergy').style.color = '#3498db';
+            } else {
+                iconEl.style.color = '#e67e22';
+                document.getElementById('modalEnergy').style.color = '#e67e22';
+            }
+
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // ปิด modal เมื่อคลิกพื้นที่ว่างข้างนอก
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // --- ส่วนเชื่อมต่อ API หลังบ้าน ---
+        async function runCalculator() {
+            const homeType = parseFloat(document.getElementById('calc-home').value);
+            const productType = document.getElementById('calc-product').value;
+
+            try {
+                const response = await fetch('/api/calculator', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        homeType,
+                        productType
+                    })
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('scorecardDisplay').style.display = 'block';
+                    document.getElementById('res-money').innerText = data.moneySaved.toLocaleString() + ' ฿';
+                    document.getElementById('res-co2').innerText = data.co2Reduced.toLocaleString() + ' kg';
+                }
+            } catch (error) {
+                // Fallback ถ้าไม่ได้เปิด server.js (ใช้สำหรับพรีเซนต์ออฟไลน์ได้)
+                let baseCO2 = productType === 'appliance' ? 450 : 120;
+                let baseMoney = productType === 'appliance' ? 4200 : 1500;
+                document.getElementById('scorecardDisplay').style.display = 'block';
+                document.getElementById('res-money').innerText = Math.round(baseMoney * homeType * 10).toLocaleString() + ' ฿';
+                document.getElementById('res-co2').innerText = Math.round(baseCO2 * homeType * 10).toLocaleString() + ' kg';
+            }
+        }
+
+        async function voteDesign(name) {
+            try {
+                const response = await fetch('/api/vote', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`🎉 ขอบคุณที่โหวตให้ ${name}!\n🎁 โค้ดส่วนลด 15% ของคุณคือ: ${data.rewardCode}\n\nนำโค้ดไปกรอกในระบบสมาชิก LINE ได้เลย!`);
+                    window.location.href = 'liff.html';
+                }
+            } catch (error) {
+                // Fallback แบบ Offline
+                alert(`🎉 ขอบคุณที่โหวตให้ ${name}!\n🎁 โค้ดส่วนลด 15% ของคุณคือ: ECO-VOTE-2026\n\nนำโค้ดไปกรอกในระบบสมาชิก LINE ได้เลย!`);
+                window.location.href = 'liff.html';
+            }
+        }
+
+        // --- ส่วนโหลด 3D Model (.glb) ของคุณ ---
+        const renderers = [],
+            scenes = [],
+            cameras = [],
+            controlsList = [];
+        const gltfLoader = new THREE.GLTFLoader();
+
+        function loadReal3DModel(containerId, modelPath, loadingTextId) {
+            const container = document.getElementById(containerId);
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xe0e6ed, 0.05);
+
+            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(5, 5, 5);
+
+            const renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            container.appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(5, 10, 5);
+            scene.add(dirLight);
+
+            gltfLoader.load(modelPath, function(gltf) {
+                const model = gltf.scene;
+
+                const box = new THREE.Box3().setFromObject(model);
+                const center = box.getCenter(new THREE.Vector3());
+                model.position.sub(center);
+
+                scene.add(model);
+                document.getElementById(loadingTextId).style.display = 'none';
+
+            }, undefined, function(error) {
+                document.getElementById(loadingTextId).innerText = "ไม่พบไฟล์โมเดล (กรุณาตรวจสอบพาทไฟล์ .glb)";
+            });
+
+            renderers.push(renderer);
+            scenes.push(scene);
+            cameras.push(camera);
+            controlsList.push(controls);
+        }
+
+        // โหลดไฟล์จากโฟลเดอร์ models/
+        loadReal3DModel('canvas-room30', 'models/duplex.glb', 'load-duplex');
+        loadReal3DModel('canvas-room32', 'models/loft_interior_6_for_free.glb', 'load-loft_interior_6_for_free');
+        loadReal3DModel('canvas-room09', 'models/appartement.glb', 'load-appartement');
+
+        function animate() {
+            requestAnimationFrame(animate);
+            for (let i = 0; i < renderers.length; i++) {
+                controlsList[i].update();
+                renderers[i].render(scenes[i], cameras[i]);
+            }
+        }
+        animate();
+    </script>
+</body>
+
+</html>
