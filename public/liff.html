@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="th">
 
@@ -813,4 +814,113 @@
     </script>
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Häfele Circular Warranty (LINE)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .app {
+            width: 100%;
+            max-width: 414px;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: #1a252f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #be1e2d;
+        }
+        
+        .points-card {
+            background: #2e7d32;
+            color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .points-card h1 {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+        
+        .input-box {
+            padding: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        button {
+            width: 100%;
+            background: #be1e2d;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="header">
+            <h2>ระบบสมาชิก E-Warranty</h2>
+        </div>
+
+        <div class="points-card">
+            <p>แต้มคาร์บอนสะสม</p>
+            <h1 id="pts">0</h1>
+        </div>
+
+        <div class="input-box">
+            <p style="font-weight: bold; color: #be1e2d; margin-bottom: 10px;">นำโค้ดจากการโหวตมากรอกที่นี่</p>
+            <input type="text" id="code" placeholder="เช่น ECO-VOTE-12345">
+            <button onclick="redeem()">ยืนยันรับสิทธิ์</button>
+            <br><br>
+            <div style="text-align: center;"><a href="index.html" style="color: #1a252f;">กลับสู่หน้าหลัก</a></div>
+        </div>
+    </div>
+
+    <script>
+        function redeem() {
+            const code = document.getElementById('code').value;
+            if (code.includes("ECO-VOTE")) {
+                document.getElementById('pts').innerText = "2,500";
+                alert("🎉 ยืนยันโค้ดสำเร็จ! รับแต้มและปลดล็อกสิทธิ์ประกันปีที่ 4");
+                document.getElementById('code').value = "";
+            } else {
+                alert("โค้ดไม่ถูกต้อง");
+            }
+        }
+    </script>
+</body>
+
+>>>>>>> e3c57f5d53deff079124671d498823b93489912e
 </html>
