@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Häfele Eco-Dashboard (LINE LIFF)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --h-red: #D30531;
+            --h-dark: #1C1F22;
+            --eco-green: #10b981;
+            --bg-color: #F5F6F8;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --border: #E2E8F0;
+            --r: 12px;
+        }
+        
+        body {
+            background: #F0F2F5;
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            background: var(--bg-color);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+            padding-bottom: 50px;
+        }
+        /* ── HEADER PROFILE ── */
+        
+        .header {
+            background: var(--h-dark);
+            color: white;
+            padding: 35px 20px 20px;
+            border-bottom: 4px solid var(--h-red);
+            border-radius: 0 0 20px 20px;
+            position: relative;
+        }
+        
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .avatar {
+            width: 55px;
+            height: 50px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--h-red);
+        }
+        
+        .user-info h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--eco-green);
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        /* ปุ่มโฮมมุมขวาบนของ Header */
+        
+        .btn-home-top {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s;
+        }
+        
+        .btn-home-top:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        /* ── IMPACT DASHBOARD ── */
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+            margin-top: -15px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .impact-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .impact-card.primary {
+            border-color: var(--eco-green);
+            background: #f0fdf4;
+            grid-column: span 2;
+        }
+        
+        .impact-icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .impact-val {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--h-dark);
+            margin: 0;
+        }
+        
+        .impact-val.green {
+            color: var(--eco-green);
+            font-size: 2.2rem;
+        }
+        
+        .impact-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        /* ── PROGRESS GOAL ── */
+        
+        .progress-section {
+            background: var(--card-bg);
+            margin: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: var(--eco-green);
+            height: 100%;
+            width: 62.5%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-align: center;
+        }
+        /* ── SHARED LAYOUT ── */
+        
+        .section-title {
+            padding: 0 20px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--h-dark);
+            margin: 28px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .list-container {
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border);
+        }
+        
+        .item-icon {
+            width: 45px;
+            height: 45px;
+            background: #f8fafc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        
+        .item-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-warn {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+        /* ── VOTE CARD ── */
+        
+        .vote-card-3d {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+        }
+        
+        .vote-3d-viewer {
+            width: 100%;
+            height: 200px;
+            background: #000000;
+            position: relative;
+        }
+        
+        .vote-info {
+            padding: 16px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        
+        .vote-btn-outline {
+            flex: 1;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Kanit';
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .vote-btn-outline:hover {
+            background: #f8fafc;
+        }
+        
+        .vote-btn-buy {
+            flex: 1.2;
+            background: rgba(227, 6, 19, 0.08);
+            color: var(--h-red);
+            border: 1px solid var(--h-red);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Kanit';
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .vote-btn-buy:hover {
+            background: var(--h-red);
+            color: white;
+        }
+        /* ── REDEEM CODE BOX ── */
+        
+        .redeem-box {
+            background: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px dashed var(--h-red);
+            text-align: center;
+        }
+        
+        .redeem-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-family: 'Kanit';
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            text-align: center;
+            outline: none;
+        }
+        
+        .redeem-box input:focus {
+            border-color: var(--h-red);
+        }
+        
+        .redeem-box button {
+            width: 100%;
+            background: var(--h-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Kanit';
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .redeem-box button:hover {
+            background: var(--deep);
+        }
+        /* ปุ่มกลับหน้าหลักขนาดใหญ่ด้านล่างสุด */
+        
+        .btn-back-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            height: 50px;
+            background: var(--h-dark);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .btn-back-main:hover {
+            background: var(--h-red);
+        }
+        /* ── FULL SCREEN MODAL ── */
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        
+        .modal-overlay.open {
+            display: flex;
+        }
+        
+        .modal-content-3d {
+            background: var(--card-bg);
+            width: 100%;
+            height: 92vh;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp .25s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-model-area {
+            flex: none;
+            height: 42vh;
+            background: #000000;
+            position: relative;
+        }
+        
+        .modal-info-area {
+            flex: 1;
+            padding: 24px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .btn-close-3d {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 10;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        /* ── ECO SPEC BREAKDOWN ── */
+        
+        .eco-list-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--h-dark);
+            margin: 15px 0 8px;
+            border-left: 3px solid var(--eco-green);
+            padding-left: 8px;
+        }
+        
+        .eco-prod-row {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+            align-items: start;
+        }
+        
+        .ep-icon {
+            font-size: 1.3rem;
+            margin-top: 2px;
+        }
+        
+        .ep-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        
+        .ep-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+        
+        .ep-highlight {
+            font-size: 0.78rem;
+            color: var(--eco-green);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        
+        .btn-register {
+            width: 100%;
+            padding: 14px;
+            background: var(--h-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Kanit';
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .btn-register:hover {
+            background: var(--deep);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: var(--h-dark);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-family: 'Kanit';
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 300;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all .3s;
+            pointer-events: none;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <div class="header">
+            <a href="index.html" class="btn-home-top">🏠 หน้าหลัก</a>
+
+            <div class="profile-row">
+                <div class="avatar">👨‍💻</div>
+                <div class="user-info">
+                    <h2>คุณ สมชาย รักษ์โลก</h2>
+                    <div class="badge">🌱 Green Hero Member</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card primary">
+                <div class="impact-lbl">แต้มคาร์บอนสะสม (Carbon Points)</div>
+                <h1 class="impact-val green" id="pts">1,250</h1>
+                <div class="impact-lbl" style="color: var(--eco-green); margin-top: 4px; font-weight: 600;">🌿 ร่วมลดคาร์บอนไปแล้ว 125 kgCO₂e</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">🌳</div>
+                <h1 class="impact-val" id="tree-count">8</h1>
+                <div class="impact-lbl">เทียบเท่าปลูกต้นไม้ (ต้น)</div>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon">🚿</div>
+                <h1 class="impact-val">450</h1>
+                <div class="impact-lbl">ประหยัดน้ำรวม (ลิตร)</div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-header">
+                <span>เป้าหมายต่อไป: โค้ดส่วนลด 30%</span>
+                <span style="color: var(--eco-green);" id="progress-text">1,250 / 2,000</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-hint">สะสมอีกเพียง 750 แต้ม เพื่อรับสิทธิ์ Circular Trade-in Voucher!</div>
+        </div>
+
+        <div class="section-title">🛡️ สินค้าที่ลงทะเบียน E-Warranty</div>
+        <div class="list-container">
+            <div class="item-card">
+                <div class="item-icon">🔐</div>
+                <div class="item-info">
+                    <div class="item-name">Digital Door Lock (PP8100)</div>
+                    <div class="item-sub">รหัส: HFW-A89F2K • ซื้อเมื่อ: 10 ม.ค. 2026</div>
+                    <div class="item-sub" style="color: var(--h-red); font-weight: 600;">หมดอายุคุ้มครองปีที่ 3: 10 ม.ค. 2029</div>
+                </div>
+                <div class="status-badge status-active">คุ้มครอง</div>
+            </div>
+            <div class="item-card">
+                <div class="item-icon">🚿</div>
+                <div class="item-info">
+                    <div class="item-name">Smart Sensor Faucet</div>
+                    <div class="item-sub">รหัส: HFW-X92M1L • ซื้อเมื่อ: 5 ก.พ. 2024</div>
+                    <div class="item-sub" style="color: #b45309; font-weight: 600;">เข้าสู่ปีที่ 3 (เตรียมสิทธิ์เทิร์นใหม่): 5 ก.พ. 2027</div>
+                </div>
+                <div class="status-badge status-warn">ปีสุดท้าย</div>
+            </div>
+        </div>
+
+        <div class="section-title">❤️ ประวัติการโหวตผลงานของคุณ</div>
+        <div class="list-container">
+            <div class="vote-card-3d">
+                <div class="vote-3d-viewer">
+                    <model-viewer src="models/comfy_living_interior_-_cgt_345_final.glb" alt="Comfy Living" camera-controls auto-rotate shadow-intensity="1" style="width: 100%; height: 100%; outline: none;"></model-viewer>
+                    <div style="position: absolute; top: 12px; left: 12px; background: rgba(16, 185, 129, 0.95); color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; backdrop-filter: blur(4px);">
+                        ✓ รับแล้ว +500 Points
+                    </div>
+                </div>
+                <div class="vote-info">
+                    <div class="item-name" style="font-size: 1.1rem; color: var(--h-dark);">Comfy Living Interior</div>
+                    <div class="item-sub">ออกแบบโดย: สตูดิโอรักษ์โลก (EcoStudio)</div>
+                    <div class="action-buttons">
+                        <button class="vote-btn-outline" onclick="openLiffDetails(1)">🔍 ดูสเปค 3D เต็มจอ</button>
+                        <button class="vote-btn-buy" onclick="alert('ระบบกำลังนำคุณไปยังหน้าผลิตภัณฑ์แคมเปญ เพื่อกดสั่งซื้อกลุ่มสินค้า Green Line...')">🛒 ช้อปสินค้าเซ็ตนี้</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">🎁 กรอกโค้ดกิจกรรมเพื่อรับแต้ม</div>
+        <div class="redeem-box">
+            <input type="text" id="code" placeholder="กรอกโค้ดส่วนลดที่ได้จากการร่วมโหวต">
+            <button onclick="redeemPoints()">ยืนยันรับแต้มคาร์บอน</button>
+        </div>
+
+        <div style="padding: 0 20px; margin-top: 30px;">
+            <a href="index.html" class="btn-back-main">🔙 กลับสู่หน้าหลักแคมเปญ</a>
+        </div>
+
+    </div>
+
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal-content-3d">
+            <button class="btn-close-3d" onclick="closeModal('detailModal')">✕</button>
+            <div class="modal-model-area">
+                <model-viewer id="modal-3d-viewer" src="" alt="3D Model" camera-controls auto-rotate shadow-intensity="1" style="width: 100%; height: 100%; outline: none;"></model-viewer>
+            </div>
+            <div class="modal-info-area">
+                <p style="color: var(--h-red); font-weight: bold; font-size: 0.85rem; margin-bottom: 4px;">HÄFELE DESIGN ECO-BREAKDOWN</p>
+                <h2 id="modal-title" style="margin-top: 0; font-size: 1.35rem; color: var(--h-dark);">-</h2>
+                <p id="modal-architect" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;"></p>
+                <div style="background: rgba(16, 185, 129, 0.08); padding: 12px; border-radius: 8px; font-size: 0.85rem; color: var(--text-main); border: 1px dashed rgba(16, 185, 129, 0.4); text-align: center;">
+                    🌳 <strong>พลังรักษ์โลกของห้องนี้:</strong> ลดคาร์บอนได้เฉลี่ย <span id="modal-co2" style="color: var(--eco-green); font-weight: bold; font-size: 1.1rem;">-</span> kgCO₂e / ปี
+                </div>
+                <div class="eco-list-title">📦 รายการอุปกรณ์ที่เป็นมิตรต่อสิ่งแวดล้อม</div>
+                <div id="modal-eco-products-list"></div>
+                <button class="btn-register" style="margin-top: 20px; font-size: 0.95rem; padding: 12px;" onclick="alert('ระบบกำลังนำรหัสส่วนลดของคุณไปประยุกต์ใช้ในการสั่งซื้อเซ็ตสินค้า Green Line...')">
+                    🛒 สั่งซื้อสินค้าทั้งหมดในแบบบ้านนี้
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">—</div>
+
+    <script>
+        let currentPoints = 1250;
+        const targetPoints = 2000;
+
+        const liffDesignsDB = {
+            1: {
+                title: "Comfy Living Interior",
+                file: "models/comfy_living_interior_-_cgt_345_final.glb",
+                architect: "ออกแบบโดย: สตูดิโอรักษ์โลก (EcoStudio)",
+                co2SavedPerYear: 140,
+                products: [{
+                    icon: "💡",
+                    name: "ระบบไฟอัจฉริยะ Smart LED Line",
+                    eco: "ประหยัดพลังงานขึ้น 80% มีเซ็นเซอร์ปรับระดับแสงตามปริมาณแสงธรรมชาติในห้องโดยอัตโนมัติ",
+                    benefit: "ช่วยลดค่าไฟแสงสว่างทันที และยืดอายุหลอดไฟนานถึง 50,000 ชั่วโมง ไม่ต้องเปลี่ยนบ่อย"
+                }, {
+                    icon: "🚪",
+                    name: "ชุดฮาร์ดแวร์บานสไลด์ Silent System",
+                    eco: "เทคโนโลยีลดแรงกระแทก ช่วยดึงประตูปิดสนิทอัตโนมัติทุกครั้ง ป้องกันลมแอร์รั่วไหลออกภายนอก",
+                    benefit: "ช่วยล็อกอุณหภูมิห้องให้คงที่ ทำให้เครื่องปรับอากาศทำงานเบาลง เซฟค่าไฟแอร์เพิ่ม 12%"
+                }]
+            },
+            2: {
+                title: "Duplex Space",
+                file: "models/duplex.glb",
+                architect: "ออกแบบโดย: ปิยะ วงศ์ศุภรณ • Atelier Sustainable",
+                co2SavedPerYear: 280,
+                products: [{
+                    icon: "⚡",
+                    name: "เครื่องดูดควันห้องครัว มอเตอร์ BLDC Eco-Drive",
+                    eco: "มอเตอร์ไฟฟ้ากระแสตรงไร้แปรงถ่าน กินพลังงานต่ำกว่าเครื่องดูดควันทั่วไปถึง 50%",
+                    benefit: "แรงดูดสม่ำเสมอแต่เงียบสนิท ไร้เสียงรบกวน และประหยัดพลังงานไฟครัวอย่างเห็นได้ชัด"
+                }, {
+                    icon: "🔐",
+                    name: "ประตูดิจิทัล Smart Lock (Low-Energy BLE)",
+                    eco: "ใช้ชิปเซ็ตประหยัดพลังงานพิเศษ ล็อก-ปลดล็อกได้รวดเร็วโดยใช้กระแสไฟต่ำมาก",
+                    benefit: "ยืดอายุถ่านไฟฉายให้ใช้งานยาวนานเกิน 1 ปี ลดการสร้างขยะอันตรายจากสารเคมีในแบตเตอรี่"
+                }]
+            },
+            3: {
+                title: "Urban Appartement",
+                file: "models/appartement.glb",
+                architect: "ออกแบบโดย: วรรณศา ศรีสมบูรณ์ • W.Arch & Associates",
+                co2SavedPerYear: 190,
+                products: [{
+                    icon: "🚿",
+                    name: "ก๊อกน้ำอัจฉริยะ Eco-Sensor Faucet",
+                    eco: "ระบบเปิด-ปิดน้ำด้วยอินฟราเรดความไวสูง พร้อมหัว Aerator ผสมฟองอากาศเข้ากับสายน้ำ",
+                    benefit: "ลดการเปิดน้ำทิ้งสิ้นเปลืองได้ 50% สัมผัสนุ่มมือ Lล้างสะอาดเท่าเดิม แต่ประหยัดค่าน้ำได้มหาศาล"
+                }, {
+                    icon: "🚽",
+                    name: "โถสุขภัณฑ์เซรามิกระบบ Dual Flush Eco",
+                    eco: "ระบบชำระล้างแบบเลือกปริมาณน้ำได้ (ใช้น้ำเพียง 3 ลิตร หรือ 4.5 ลิตรต่อครั้ง)",
+                    benefit: "ลดการใช้น้ำลง 40% เมื่อเทียบกับโถสุขภัณฑ์แบบเก่า ปรับพฤติกรรมรักษ์โลกให้ทุกคนในบ้าน"
+                }]
+            },
+            4: {
+                title: "Loft Interior Style",
+                file: "models/loft_interior_6_for_free.glb",
+                architect: "ออกแบบโดย: ภาคภูมิ รัตนประดิษฐ์ • Zero Carbon Design",
+                co2SavedPerYear: 220,
+                products: [{
+                    icon: "🍳",
+                    name: "เตาแม่เหล็กไฟฟ้า Smart Induction Hob",
+                    eco: "ส่งผ่านความร้อนตรงสู่ก้นภาชนะโดยตรง ไม่สูญเสียรังสีความร้อนกระจายออกไปในอากาศ",
+                    benefit: "ทำอาหารสุกไวขึ้น 35% ประหยัดเวลาและพลังงานไฟฟ้า ไม่ทำให้อุณหภูมิในห้องครัวร้อนขึ้น"
+                }, {
+                    icon: "🚪",
+                    name: "โช้คประตูระบบตั้งค้างอัตโนมัติ (Door Closer)",
+                    eco: "ควบคุมความเร็วในการปิดประตูหน้าบ้านและห้องนอนให้สนิทแน่นหนา ไร้ช่องว่าง",
+                    benefit: "ป้องกันแอร์เล็ดลอดกักเก็บความเย็นได้ 100% ป้องกันฝุ่นละอองและเสียงรบกวนจากภายนอกอาคาร"
+                }]
+            }
+        };
+
+        function updateUI() {
+            document.getElementById('pts').innerText = currentPoints.toLocaleString();
+            let percent = (currentPoints / targetPoints) * 100;
+            if (percent > 100) percent = 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = `${currentPoints.toLocaleString()} / ${targetPoints.toLocaleString()}`;
+        }
+
+        function openLiffDetails(id) {
+            const data = liffDesignsDB[id];
+            if (!data) return;
+
+            document.getElementById('modal-3d-viewer').src = data.file;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-architect').innerText = data.architect;
+            document.getElementById('modal-co2').innerText = data.co2SavedPerYear;
+
+            const container = document.getElementById('modal-eco-products-list');
+            container.innerHTML = data.products.map(p => `
+                <div class="eco-prod-row">
+                    <div class="ep-icon">${p.icon}</div>
+                    <div>
+                        <div class="ep-name">${p.name}</div>
+                        <div class="ep-desc"><strong>☘️ จุดเด่นรักษ์โลก:</strong> ${p.eco}</div>
+                        <div class="ep-highlight"><strong>💰 ประโยชน์ของคุณ:</strong> ${p.benefit}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('detailModal').classList.add('open');
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) modal.classList.remove('open');
+            if (id === 'detailModal') {
+                document.getElementById('modal-3d-viewer').src = "";
+            }
+        }
+
+        function redeemPoints() {
+            const code = document.getElementById('code').value.trim().toUpperCase();
+            if (!code) {
+                alert('กรุณากรอกโค้ดก่อนครับ');
+                return;
+            }
+
+            if (code.startsWith("ECO-")) {
+                currentPoints += 500;
+                updateUI();
+                alert("🎉 บันทึกโค้ดกิจกรรมสำเร็จ!\nรับเพิ่ม 500 Carbon Points เรียบร้อยแล้วครับ");
+                document.getElementById('code').value = "";
+                document.getElementById('tree-count').innerText = "10";
+            } else {
+                alert("❌ รหัสไม่ถูกต้อง หรือสิทธิ์ถูกใช้งานแล้ว");
+            }
+        }
+    </script>
+</body>
+
+</html>
