@@ -13,111 +13,78 @@ app.use(express.static(path.join(__dirname, 'public')));
 const db = {
     designs: [{
             id: 1,
-            title: "EcoNest Residence",
-            architect: "ณัฐพล สิริมงคล",
-            firm: "GreenSpace Studio BKK",
-            carbonScore: 87,
-            co2Saved: 2450,
-            moneySaved: 68000,
-            description: "บ้านเดี่ยว 3 ชั้น ระบบ Passive Cooling ร่วมกับหน้าต่าง Low-E สองชั้น และประตูดิจิทัล Häfele ลดการสูญเสียความเย็น 40%",
-            votes: 2340,
+            title: "Minimalist Eco Haven",
+            architect: "Atelier Sustainable",
+            firm: "AS Studio",
+            carbonScore: 85,
+            co2Saved: 1250,
+            moneySaved: 85000,
+            description: "บ้านเดี่ยวที่เน้นการใช้วัสดุและฮาร์ดแวร์ประตูที่ปล่อยคาร์บอนต่ำ",
+            votes: 8500,
             homeType: "single",
-            tags: ["passive-cooling", "digital-lock", "lighting"],
+            tags: ["hardware", "digital-lock"],
             color: "#064e3b"
         },
         {
             id: 2,
-            title: "The Carbon Condo",
-            architect: "ปิยะ วงศ์สุวรรณ",
-            firm: "Atelier Sustainable",
+            title: "Comfy Living Interior",
+            architect: "EcoStudio Design",
+            firm: "EcoStudio",
             carbonScore: 82,
-            co2Saved: 1820,
-            moneySaved: 45000,
-            description: "คอนโดมิเนียม High-Rise 32 ชั้น ติดตั้งก๊อกน้ำ Smart Faucet และระบบแสงสว่าง Häfele ทุกยูนิต ลด CO₂ ได้ 1,820 kg/ปี",
-            votes: 1987,
+            co2Saved: 950,
+            moneySaved: 62000,
+            description: "ตกแต่งภายในคอนโดโดยใช้ระบบ Smart Home ลดพลังงานแฝง",
+            votes: 6200,
             homeType: "condo",
-            tags: ["faucet", "lighting", "appliance"],
+            tags: ["smart", "appliance"],
             color: "#065f46"
         },
         {
             id: 3,
-            title: "Townhouse Tomorrow",
-            architect: "วรรณา ศรีสมบูรณ์",
-            firm: "W.Arch & Associates",
-            carbonScore: 79,
-            co2Saved: 1560,
-            moneySaved: 38000,
-            description: "ทาวน์โฮม 3 ชั้น ผนังเขียวชะอุ่มรอบบ้าน ระบบ Smart Lock และก๊อกน้ำประหยัดน้ำ 70%",
-            votes: 1756,
+            title: "Smart Green Space",
+            architect: "Green Arch",
+            firm: "GA Partners",
+            carbonScore: 78,
+            co2Saved: 820,
+            moneySaved: 54000,
+            description: "ทาวน์โฮมระบบหมุนเวียนอากาศอัจฉริยะ พร้อมบานพับทนทาน",
+            votes: 4245,
             homeType: "townhouse",
-            tags: ["faucet", "digital-lock"],
+            tags: ["hinges", "faucet"],
             color: "#047857"
-        },
-        {
-            id: 4,
-            title: "Net Zero Villa",
-            architect: "ภาคภูมิ รัตนประดิษฐ์",
-            firm: "Zero Carbon Design",
-            carbonScore: 76,
-            co2Saved: 2100,
-            moneySaved: 58000,
-            description: "วิลล่า 4 ห้องนอน มุ่งสู่ Net Zero โดยใช้แผงโซลาร์เซลล์ร่วมกับอุปกรณ์ Häfele Premium ทุกรายการ",
-            votes: 1543,
-            homeType: "single",
-            tags: ["solar", "appliance", "lighting"],
-            color: "#059669"
-        },
-        {
-            id: 5,
-            title: "Urban Green Pod",
-            architect: "ธนัช อินทร์แก้ว",
-            firm: "Peas & Pods Studio",
-            carbonScore: 73,
-            co2Saved: 1200,
-            moneySaved: 32000,
-            description: "คอนโดขนาดเล็ก 1 ห้องนอน Layout ประหยัดพลังงานสูงสุด หน้าต่างทิศตะวันออก-ตก และก๊อก Smart Flow",
-            votes: 1321,
-            homeType: "condo",
-            tags: ["faucet", "lighting"],
-            color: "#10b981"
-        },
-        {
-            id: 6,
-            title: "Harmony Courtyard",
-            architect: "สมหญิง ดาราพงศ์",
-            firm: "S.Dara Architects",
-            carbonScore: 71,
-            co2Saved: 1680,
-            moneySaved: 41000,
-            description: "บ้านสไตล์ไทยประยุกต์ มีลานบ้านกลางเป็นหัวใจ ระบบ Air Flow ธรรมชาติ ลดการใช้แอร์ได้ 65%",
-            votes: 1187,
-            homeType: "single",
-            tags: ["passive-cooling", "appliance"],
-            color: "#34d399"
         }
     ],
     warranties: [],
     promoCodes: [],
+    // 🟢 อัปเดต KPI ให้สอดคล้องกับหน้า Admin Dashboard โฉมใหม่
     kpi: {
-        totalCalculations: 3450,
-        totalVotes: 12400,
-        totalSubmissions: 67,
-        totalWarranties: 234,
-        totalImpressions: 1243000
+        totalCalculations: 18452,
+        totalVotes: 86430,
+        totalSubmissions: 342,
+        totalWarranties: 4120,
+        // เพิ่ม Marketing & Business Metrics
+        reach: 1245000,
+        traffic: 284500,
+        storeVisits: 12450,
+        conversionRate: 4.2,
+        premiumSales: 2800000,
+        engagementRate: 12.4,
+        brandLift: 22
     }
 };
 
 // ============================================================
-// CARBON CALCULATOR DATA
+// CARBON CALCULATOR DATA (อิงตามหมวดหมู่ EPD ใหม่)
 // ============================================================
 const PRODUCTS = {
-    'digital-lock': { name: 'ประตูดิจิทัล Häfele', co2: 120, savings: 1500 },
-    'appliance': { name: 'เครื่องใช้ไฟฟ้า Smart', co2: 450, savings: 4200 },
-    'faucet': { name: 'ก๊อกน้ำอัจฉริยะ', co2: 80, savings: 800 },
-    'lighting': { name: 'ระบบแสงสว่าง LED', co2: 200, savings: 2000 }
+    'cat1': { name: 'หมวดมือจับประตูและหน้าต่าง', co2: 6.47, savings: 100 },
+    'cat2': { name: 'หมวดอุปกรณ์เครื่องกลไฟฟ้า', co2: 11.80, savings: 450 },
+    'cat3': { name: 'หมวดบานพับ', co2: 7.37, savings: 50 },
+    'cat4': { name: 'หมวดตลับกุญแจ', co2: 5.62, savings: 150 },
+    'cat5': { name: 'หมวดไส้กุญแจ', co2: 10.90, savings: 120 }
 };
 
-const HOME_MULTIPLIERS = { condo: 1.0, townhouse: 1.8, single: 3.0 };
+const HOME_MULTIPLIERS = { condo: 1.0, townhouse: 1.5, single: 2.0 };
 
 // ============================================================
 // ROUTES
@@ -125,28 +92,26 @@ const HOME_MULTIPLIERS = { condo: 1.0, townhouse: 1.8, single: 3.0 };
 
 // Carbon ROI Calculator
 app.post('/api/calculator', (req, res) => {
-    const { homeType, productType, years = 10 } = req.body;
+    const { homeType, productType, timeMonths = 12 } = req.body;
     if (!PRODUCTS[productType] || !HOME_MULTIPLIERS[homeType])
         return res.status(400).json({ success: false, error: 'ข้อมูลไม่ถูกต้อง' });
 
     db.kpi.totalCalculations += 1;
+    db.kpi.traffic += 1; // นับ Traffic เพิ่มเมื่อมีการใช้งาน
 
     const p = PRODUCTS[productType];
     const m = HOME_MULTIPLIERS[homeType];
-    const y = Math.min(Math.max(parseInt(years) || 10, 1), 30);
-    const co2Year = Math.round(p.co2 * m);
-    const saveYear = Math.round(p.savings * m);
+    const totalCo2 = p.co2 * m;
+    const totalMoney = p.savings * m * timeMonths;
 
     res.json({
         success: true,
         productName: p.name,
-        co2PerYear: co2Year,
-        moneySavedPerYear: saveYear,
-        co2Total: Math.round(co2Year * y),
-        moneySavedTotal: Math.round(saveYear * y),
-        years: y,
-        carbonScore: Math.min(Math.round(55 + co2Year / 15), 99),
-        equivalentTrees: Math.round((co2Year * y) / 21)
+        co2Total: totalCo2.toFixed(2),
+        moneySavedTotal: totalMoney,
+        timeMonths: timeMonths,
+        carbonScore: Math.max(100 - Math.round(totalCo2 * 0.5), 20),
+        equivalentTrees: Math.round(totalCo2 / 1.25)
     });
 });
 
@@ -161,7 +126,7 @@ app.post('/api/designs/submit', (req, res) => {
     const { title, architect, firm, homeType, description, tags } = req.body;
     if (!title || !architect || !homeType)
         return res.status(400).json({ success: false, error: 'กรุณากรอกข้อมูลให้ครบถ้วน' });
-    HEAD
+
     const colors = ['#064e3b', '#065f46', '#047857', '#059669', '#10b981'];
     const design = {
         id: db.designs.length + 1,
@@ -171,9 +136,14 @@ app.post('/api/designs/submit', (req, res) => {
         description: description || '',
         homeType,
         tags: tags || [],
+        carbonScore: Math.floor(Math.random() * 20) + 70, // จำลองคะแนน 70-90
+        co2Saved: Math.floor(Math.random() * 1000) + 500,
+        moneySaved: Math.floor(Math.random() * 50000) + 20000,
+        votes: 0,
         color: colors[Math.floor(Math.random() * colors.length)],
         submittedAt: new Date().toISOString()
     };
+
     db.designs.push(design);
     db.kpi.totalSubmissions += 1;
     res.json({ success: true, design });
@@ -189,7 +159,7 @@ app.post('/api/vote', (req, res) => {
     design.votes += 1;
     db.kpi.totalVotes += 1;
 
-    const code = `ECO-${design.id}-${Math.floor(Math.random() * 90000 + 10000)}`;
+    const code = `HFL2026-${design.id}-${Math.floor(Math.random() * 9000 + 1000)}`;
     db.promoCodes.push(code);
 
     res.json({
@@ -202,13 +172,26 @@ app.post('/api/vote', (req, res) => {
 
 // E-Warranty Registration
 app.post('/api/warranty', (req, res) => {
-    const { name, phone, email, productType, purchaseDate } = req.body;
-    if (!name || !phone || !productType)
+    const { name, phone, email, productCategory, productItem, purchaseDate } = req.body;
+    if (!name || !phone || !productCategory)
         return res.status(400).json({ success: false, error: 'กรุณากรอกข้อมูลให้ครบถ้วน' });
 
     const warrantyId = `HFW-${Date.now().toString(36).toUpperCase()}`;
-    db.warranties.push({ id: warrantyId, name, phone, email, productType, purchaseDate, carbonPoints: 50, registeredAt: new Date().toISOString() });
+    db.warranties.push({
+        id: warrantyId,
+        name,
+        phone,
+        email,
+        productCategory,
+        productItem,
+        purchaseDate,
+        carbonPoints: 50,
+        registeredAt: new Date().toISOString()
+    });
+
     db.kpi.totalWarranties += 1;
+    // ลงทะเบียนประกันสำเร็จ แปลว่าซื้อของจริง = เพิ่ม Store Visits ด้วย
+    db.kpi.storeVisits += 1;
 
     res.json({
         success: true,
@@ -218,17 +201,29 @@ app.post('/api/warranty', (req, res) => {
     });
 });
 
-// KPI Dashboard
+// 🟢 KPI Dashboard Endpoint (อัปเดตใหม่)
 app.get('/api/kpi', (_req, res) => {
     const top3 = [...db.designs]
         .sort((a, b) => b.votes - a.votes)
         .slice(0, 3)
-        .map(d => ({ id: d.id, title: d.title, votes: d.votes, carbonScore: d.carbonScore, architect: d.architect }));
+        .map(d => ({
+            id: d.id,
+            title: d.title,
+            votes: d.votes,
+            carbonScore: d.carbonScore,
+            architect: d.architect
+        }));
 
     res.json({
         success: true,
         kpi: db.kpi,
-        targets: { calculations: 5000, votes: 20000, submissions: 100, warranties: 500, impressions: 3000000 },
+        targets: {
+            calculations: 20000,
+            votes: 100000,
+            submissions: 500,
+            warranties: 5000,
+            reach: 2000000 // เป้าหมายการเข้าถึง 2 ล้านคน
+        },
         top3
     });
 });

@@ -11,28 +11,18 @@
          :root {
             /* ── HÄFELE CORPORATE COLORS ── */
             --jet: #1C1F22;
-            /* พื้นหลังเข้มหลัก */
             --forest: #D30531;
-            /* สีแดง Häfele Red */
             --deep: #A90427;
-            /* สีแดงเข้ม (เมื่อ Hover) */
             --em: #E30613;
-            /* สีแดงเด่น (สำหรับเน้น) */
             --lime: #FCE6E8;
-            /* สีพื้นหลังอ่อน (เมื่อเลือก Checkbox) */
             --gold: #FFC000;
-            /* สีทอง (สำหรับเหรียญ/รางวัล) */
             --amber: #FFF3CD;
-            /* สีเหลืองอ่อน (สำหรับ Badge) */
             --cream: #F5F6F8;
-            /* สีพื้นหลังสว่าง */
             --border: #DDE2E5;
-            /* สีเส้นขอบ */
             --muted: #6B7280;
-            /* สีตัวอักษรรอง */
             --text: #2D3748;
-            /* สีตัวอักษรหลัก */
             --white: #ffffff;
+            --eco-green: #10b981;
             --r: 12px;
             --font-d: 'Kanit', sans-serif;
             --font-b: 'Noto Sans Thai', sans-serif;
@@ -414,13 +404,75 @@
             margin-bottom: 28px;
         }
         
-        .field-group label {
-            display: block;
+        .field-group label.main-label {
+            display: flex;
+            align-items: center;
             font-family: var(--font-d);
-            font-weight: 600;
-            font-size: 0.85rem;
+            font-weight: 700;
+            font-size: 0.95rem;
             color: var(--text);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+        }
+        
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--jet);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-family: var(--font-m);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge-unit {
+            font-size: 0.75rem;
+            background: #e2e8f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #475569;
+            font-weight: normal;
+            margin-left: auto;
+        }
+        
+        .calc-form select,
+        .calc-form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: 'Kanit';
+            outline: none;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            background: var(--white);
+        }
+        
+        .calc-form select:focus,
+        .calc-form input[type="number"]:focus {
+            border-color: var(--h-red);
+        }
+        
+        .row-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .row-input>div {
+            flex: 1;
+        }
+        
+        .row-input label {
+            font-size: 0.8rem;
+            color: #475569;
+            display: block;
+            margin-bottom: 4px;
+            font-weight: normal;
         }
         
         .radio-grid {
@@ -500,13 +552,14 @@
             background: var(--jet);
             border-radius: 20px;
             padding: 36px;
-            min-height: 420px;
+            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
             overflow: hidden;
             border: 1px solid #3A4148;
+            border-top: 4px solid var(--eco-green);
         }
         
         .result-card::before {
@@ -517,6 +570,27 @@
             width: 300px;
             height: 300px;
             background: radial-gradient(circle, rgba(227, 6, 19, 0.15) 0%, transparent 70%);
+        }
+        
+        .total-box {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #3A4148;
+            margin-bottom: 20px;
+        }
+        
+        .total-val {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1;
+            margin: 10px 0;
+            font-family: var(--font-m);
+        }
+        
+        .total-unit {
+            font-size: 1.1rem;
+            color: #cbd5e1;
         }
         
         .result-placeholder {
@@ -563,32 +637,6 @@
         .btn-share:hover {
             background: var(--em);
             color: var(--white);
-        }
-        /* ── UPGRADED CALCULATOR UI ── */
-        
-        .step-label {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--jet);
-            color: var(--white);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            font-family: var(--font-m);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
-        .field-group label.main-label {
-            display: flex;
-            align-items: center;
-            font-family: var(--font-d);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--text);
-            margin-bottom: 14px;
         }
         
         .product-list-grid {
@@ -837,6 +885,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-direction: column;
+            gap: 10px;
         }
         
         .vote-count {
@@ -1650,34 +1700,33 @@
                     </div>
 
                     <div class="field-group">
-                        <label class="main-label"><span class="step-label">2</span> พื้นที่ที่กำลังตกแต่ง (ห้องไหน?)</label>
+                        <label class="main-label"><span class="step-label">2</span> พื้นที่ที่กำลังตกแต่ง</label>
                         <select id="c-room" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: var(--font-b); outline: none;">
                             <option value="living">🛋️ ห้องนั่งเล่น / ห้องรับแขก</option>
                             <option value="kitchen">🍳 ห้องครัว</option>
                             <option value="bedroom">🛏️ ห้องนอน</option>
                             <option value="bathroom">🚿 ห้องน้ำ</option>
-                            <option value="storage">📦 ห้องเก็บของ</option>
                         </select>
                     </div>
 
                     <div class="field-group">
-                        <label class="main-label"><span class="step-label">3</span> หมวดหมู่สินค้า Häfele</label>
+                        <label class="main-label"><span class="step-label">3</span> หมวดหมู่สินค้าฮาร์ดแวร์ Häfele</label>
                         <select id="c-category" onchange="filterProducts()" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: var(--font-b); outline: none;">
-                            <option value="smart">🔐 Smart Home & Security</option>
-                            <option value="appliance">⚡ Appliances</option>
-                            <option value="sanitary">🚿 Sanitary</option>
-                            <option value="lighting">💡 Lighting</option>
-                            <option value="hardware">🚪 Architectural Hardware</option>
+                            <option value="cat1">🚪 หมวดมือจับประตูและหน้าต่าง</option>
+                            <option value="cat2">⚡ หมวดอุปกรณ์เครื่องกลไฟฟ้า</option>
+                            <option value="cat3">🔗 หมวดบานพับ</option>
+                            <option value="cat4">🔒 หมวดตลับกุญแจ</option>
+                            <option value="cat5">🔑 หมวดไส้กุญแจ</option>
                         </select>
                     </div>
 
                     <div class="field-group">
-                        <label class="main-label"><span class="step-label">4</span> เลือกสินค้า (เลือกได้หลายรายการ)</label>
+                        <label class="main-label"><span class="step-label">4</span> เลือกซีรีส์สินค้า (เลือกได้หลายรายการ)</label>
                         <div id="c-product-list" class="product-list-grid"></div>
                     </div>
 
                     <div class="field-group">
-                        <label class="main-label"><span class="step-label">5</span> ระยะเวลาคำนวณ</label>
+                        <label class="main-label"><span class="step-label">5</span> ระยะเวลาใช้งาน (เพื่อคำนวณเงินออม)</label>
                         <div class="radio-grid">
                             <div class="radio-card"><input type="radio" name="c-time" id="ct-1m" value="1"><label for="ct-1m"><span class="name" style="font-size:1rem;margin-top:4px;">1 เดือน</span></label></div>
                             <div class="radio-card"><input type="radio" name="c-time" id="ct-6m" value="6" checked><label for="ct-6m"><span class="name" style="font-size:1rem;margin-top:4px;">6 เดือน</span></label></div>
@@ -1689,12 +1738,12 @@
                 </div>
 
                 <div class="calc-result">
-                    <div class="result-card" style="position: relative;">
+                    <div class="result-card" style="position: relative; border-top: 4px solid var(--eco-green);">
                         <button style="position: absolute; top: 16px; right: 20px; background: transparent; border: none; color: #ffffff; font-size: 1.8rem; cursor: pointer; z-index: 999;" onclick="resetCalculator()">✕</button>
 
                         <div class="result-placeholder" id="res-placeholder">
                             <div class="big-icon">📊</div>
-                            <p>ระบุข้อมูลให้ครบถ้วนและกดคำนวณ<br>เพื่อดูผลลัพธ์การรักษ์โลกของคุณ</p>
+                            <p>ระบุข้อมูลให้ครบถ้วนและกดคำนวณ<br>เพื่อดูผลลัพธ์คาร์บอนแฝง</p>
                         </div>
 
                         <div class="result-content" id="res-content">
@@ -1703,36 +1752,32 @@
 
                             <div id="res-selected-items" style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: left;"></div>
 
-                            <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 20px; font-size: 0.95rem; border: 1px solid rgba(255, 255, 255, 0.1); color: #ffffff;">
-                                💡 เฉลี่ยประหยัดค่าไฟ/น้ำได้ <strong style="color: var(--em); font-size: 1.3rem;">฿<span id="res-monthly-save">0</span> / เดือน</strong>
-                            </div>
-
                             <div class="visual-stats">
                                 <div class="v-stat-card">
                                     <div class="v-stat-icon">🌳</div>
                                     <div class="v-stat-info">
-                                        <div class="v-stat-lbl">เทียบเท่าการปลูกต้นไม้</div>
-                                        <div class="v-stat-val em"><span id="res-trees">—</span> <span style="font-size: 0.8rem;">ต้น</span></div>
+                                        <div class="v-stat-lbl">ต้องปลูกต้นไม้ชดเชย (ต้น)</div>
+                                        <div class="v-stat-val em"><span id="res-trees">—</span></div>
                                     </div>
                                 </div>
                                 <div class="v-stat-card">
                                     <div class="v-stat-icon">☁️</div>
                                     <div class="v-stat-info">
-                                        <div class="v-stat-lbl">ลดการปล่อยก๊าซ CO₂</div>
-                                        <div class="v-stat-val"><span id="res-co2">—</span> <span style="font-size: 0.8rem;">kgCO₂e</span></div>
+                                        <div class="v-stat-lbl">คาร์บอนแฝงรวม (kgCO₂e)</div>
+                                        <div class="v-stat-val"><span id="res-co2">—</span></div>
                                     </div>
                                 </div>
                                 <div class="v-stat-card">
                                     <div class="v-stat-icon">💰</div>
                                     <div class="v-stat-info">
-                                        <div class="v-stat-lbl">ยอดประหยัดรวม</div>
+                                        <div class="v-stat-lbl">ประหยัดแอร์/ซ่อมบำรุง (บาท)</div>
                                         <div class="v-stat-val gold">฿<span id="res-money">—</span></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div style="background: rgba(227, 6, 19, 0.1); border: 1px dashed rgba(227, 6, 19, 0.4); padding: 16px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
-                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">คะแนนความยั่งยืนรวม</div>
+                                <div style="font-size: 0.8rem; color: rgba(255,255,255,0.6);">คะแนนความยั่งยืน</div>
                                 <div style="font-family: var(--font-m); font-size: 2rem; font-weight: bold; color: var(--white);" id="res-score">—</div>
                             </div>
 
@@ -1814,11 +1859,11 @@
                         <label>หมวดหมู่สินค้า Häfele *</label>
                         <select id="w-product" onchange="updateWarrantyProducts()">
                             <option value="">-- เลือกหมวดหมู่สินค้า --</option>
-                            <option value="smart">🔐 Smart Home & Security</option>
-                            <option value="appliance">⚡ Appliances</option>
-                            <option value="sanitary">🚿 Sanitary</option>
-                            <option value="lighting">💡 Lighting</option>
-                            <option value="hardware">🚪 Architectural Hardware</option>
+                            <option value="cat1">🚪 หมวดมือจับประตูและหน้าต่าง</option>
+                            <option value="cat2">⚡ หมวดอุปกรณ์เครื่องกลไฟฟ้า</option>
+                            <option value="cat3">🔗 หมวดบานพับ</option>
+                            <option value="cat4">🔒 หมวดตลับกุญแจ</option>
+                            <option value="cat5">🔑 หมวดไส้กุญแจ</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1962,6 +2007,9 @@
                 <p style="color: var(--em); font-weight: bold; font-size: 0.85rem; margin-bottom: 5px;">HÄFELE ECO-INNOVATION</p>
                 <h2 id="modal-title" style="margin-top: 0; font-size: 1.8rem; color: var(--jet);">-</h2>
                 <p id="modal-desc" style="color: var(--muted); font-size: 0.95rem; line-height: 1.6;"></p>
+
+                <div id="modal-hafele-products"></div>
+
                 <h4 style="margin-top: 15px; margin-bottom: 10px; font-size: 1rem; color: var(--text);">สถิติการประหยัดพลังงาน (ต่อเดือน)</h4>
                 <div class="eco-grid">
                     <div class="eco-card highlight">
@@ -1999,8 +2047,8 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initProducts();
-            loadKPI();
-            loadDesigns();
+            loadKPI(); // 🟢 จำลองข้อมูล Dashbaord เสมือนจริง
+            loadDesigns(); // 🟢 จำลองข้อมูล Gallery
         });
 
         document.querySelectorAll('.modal-overlay').forEach(m => {
@@ -2039,71 +2087,147 @@
             });
         }
 
+        // ==========================================
+        // 🌿 ฐานข้อมูลสินค้าทั้ง 5 หมวดหมู่ ตาม EPD (สลับชื่อขึ้นก่อน ซีรีส์ไว้หลัง)
+        // มีการจำลองคาร์บอนแฝงที่สมจริง โดยคูณน้ำหนักที่ต่างกันของแต่ละรุ่น
+        // ==========================================
         const calcProductsDB = {
-            "smart": [{
-                id: "sm1",
-                name: "Digital Door Lock รุ่นประหยัดพลังงาน",
-                desc: "ใช้พลังงานต่ำ (BLE) แบตเตอรี่อยู่ได้นาน 1 ปี ลดขยะอิเล็กทรอนิกส์และลดการหล่อโลหะทำกุญแจ",
-                co2PerMonth: 0.5,
-                savePerMonth: 20
+            "cat1": [{
+                id: "c1_1",
+                name: "มือจับประตู PDH 3",
+                desc: "ดีไซน์มาตรฐานทนทาน แข็งแรง",
+                co2: 2.58,
+                save: 10
             }, {
-                id: "sm2",
-                name: "Smart Home Controller",
-                desc: "ระบบตั้งเวลาและตัดไฟอัตโนมัติเมื่อไม่มีคนอยู่ห้อง ลดการใช้ไฟแฝง (Standby Power) ได้ถึง 100%",
-                co2PerMonth: 4.5,
-                savePerMonth: 120
+                id: "c1_2",
+                name: "มือจับประตู PDH 4",
+                desc: "ดีไซน์พรีเมียม จับกระชับมือ",
+                co2: 3.23,
+                save: 12
+            }, {
+                id: "c1_3",
+                name: "มือจับประตู LDH 2",
+                desc: "รูปทรง L-Shape สไตล์โมเดิร์น",
+                co2: 3.88,
+                save: 15
+            }, {
+                id: "c1_4",
+                name: "มือจับประตู PH-Series",
+                desc: "สำหรับประตูบานผลัก (Push Handle)",
+                co2: 4.50,
+                save: 10
+            }, {
+                id: "c1_5",
+                name: "มือจับประตู SDH-Series",
+                desc: "สำหรับประตูบานเลื่อน (Sliding Door)",
+                co2: 5.10,
+                save: 15
+            }, {
+                id: "c1_6",
+                name: "มือจับหน้าต่าง WH-Series",
+                desc: "มือจับหน้าต่างบานกระทุ้ง/บานเปิด",
+                co2: 1.80,
+                save: 5
+            }, {
+                id: "c1_7",
+                name: "มือจับหน้าต่าง PWH 4",
+                desc: "มือจับหน้าต่างพรีเมียม",
+                co2: 2.10,
+                save: 8
             }],
-            "appliance": [{
-                id: "ap1",
-                name: "เตาแม่เหล็กไฟฟ้า (Induction Hob)",
-                desc: "ส่งผ่านความร้อนสู่ภาชนะโดยตรง ไม่สูญเสียความร้อนไปในอากาศ ทำอาหารสุกไว ประหยัดไฟกว่า 30%",
-                co2PerMonth: 12.0,
-                savePerMonth: 250
+            "cat2": [{
+                id: "c2_1",
+                name: "ระบบล็อกอิเล็กทรอนิกส์ DT 2",
+                desc: "ระบบควบคุมการเข้าออกพื้นฐาน",
+                co2: 14.16,
+                save: 45
             }, {
-                id: "ap2",
-                name: "เครื่องดูดควัน มอเตอร์ BLDC",
-                desc: "มอเตอร์ Eco กินไฟน้อยกว่ามอเตอร์ทั่วไป 50% พร้อมระบบลดเสียงรบกวน",
-                co2PerMonth: 8.0,
-                savePerMonth: 180
+                id: "c2_2",
+                name: "ระบบล็อกอิเล็กทรอนิกส์ DT 4",
+                desc: "ระบบควบคุมอัจฉริยะสำหรับสำนักงาน",
+                co2: 17.70,
+                save: 55
+            }, {
+                id: "c2_3",
+                name: "ระบบล็อกอิเล็กทรอนิกส์ DT 5",
+                desc: "รองรับการเชื่อมต่อเครือข่ายไร้สาย",
+                co2: 19.50,
+                save: 60
+            }, {
+                id: "c2_4",
+                name: "ระบบล็อกอิเล็กทรอนิกส์ DT 6",
+                desc: "ดีไซน์ซ่อนรูป ปลอดภัยสูง",
+                co2: 21.24,
+                save: 75
+            }, {
+                id: "c2_5",
+                name: "ระบบล็อกอิเล็กทรอนิกส์ DT 7",
+                desc: "รุ่นท็อป รองรับ Smart Home เต็มรูปแบบ",
+                co2: 24.80,
+                save: 90
             }],
-            "sanitary": [{
-                id: "sn1",
-                name: "ก๊อกน้ำเซ็นเซอร์อัจฉริยะ (Sensor Faucet)",
-                desc: "ระบบเปิด-ปิดอัตโนมัติ พร้อมหัว Aerator ผสมอากาศ ลดการใช้น้ำสิ้นเปลืองได้ถึง 50%",
-                co2PerMonth: 6.0,
-                savePerMonth: 100
+            "cat3": [{
+                id: "c3_1",
+                name: "บานพับประตู DHB",
+                desc: "บานพับลูกปืนมาตรฐาน",
+                co2: 1.10,
+                save: 5
             }, {
-                id: "sn2",
-                name: "โถสุขภัณฑ์ Dual Flush",
-                desc: "แยกระบบชำระล้าง ใช้น้ำเพียง 3 / 4.5 ลิตรต่อครั้ง ประหยัดน้ำรวม 40% ต่อเดือน",
-                co2PerMonth: 10.0,
-                savePerMonth: 150
+                id: "c3_2",
+                name: "บานพับประตู H-Series",
+                desc: "บานพับซ่อน (Concealed Hinge)",
+                co2: 1.47,
+                save: 8
+            }, {
+                id: "c3_3",
+                name: "บานพับประตู DHV",
+                desc: "บานพับสำหรับประตูหนัก (Heavy Duty)",
+                co2: 1.84,
+                save: 10
+            }, {
+                id: "c3_4",
+                name: "บานพับประตู DHX",
+                desc: "บานพับสเตนเลสสตีลกันสนิม",
+                co2: 2.21,
+                save: 12
             }],
-            "lighting": [{
-                id: "lt1",
-                name: "หลอดไฟ Smart LED",
-                desc: "หรี่แสงได้ตามต้องการ ใช้พลังงานต่ำกว่าหลอดไส้ 80% อายุการใช้งานยาวนาน 50,000 ชั่วโมง",
-                co2PerMonth: 5.0,
-                savePerMonth: 80
+            "cat4": [{
+                id: "c4_1",
+                name: "ตลับกุญแจ Startec Klasse 1",
+                desc: "ตลับกุญแจมาตรฐานสำหรับประตูภายใน",
+                co2: 2.25,
+                save: 15
             }, {
-                id: "lt2",
-                name: "ไฟ Sensor ทางเดิน",
-                desc: "สว่างเฉพาะเวลาเดินผ่าน ไม่ต้องเปิดไฟทิ้งไว้ทั้งคืน เหมาะกับห้องน้ำหรือบันได",
-                co2PerMonth: 3.5,
-                savePerMonth: 50
+                id: "c4_2",
+                name: "ตลับกุญแจ Startec Klasse 3",
+                desc: "ตลับกุญแจความปลอดภัยสูง ป้องกันการงัดแงะ",
+                co2: 2.81,
+                save: 20
+            }, {
+                id: "c4_3",
+                name: "ตลับกุญแจ Startec Klasse 3 FH",
+                desc: "ตลับกุญแจทนไฟ (Fire-rated)",
+                co2: 3.37,
+                save: 25
             }],
-            "hardware": [{
-                id: "hw1",
-                name: "โช้คประตู (Door Closer)",
-                desc: "ดึงประตูปิดสนิทอัตโนมัติ ป้องกันแอร์รั่วไหลออกนอกห้อง ลดภาระการทำงานของแอร์ได้ 15%",
-                co2PerMonth: 15.0,
-                savePerMonth: 350
+            "cat5": [{
+                id: "c5_1",
+                name: "ไส้กุญแจครึ่งซีก (Halbzylinder)",
+                desc: "ไส้กุญแจสำหรับล็อกด้านเดียว",
+                co2: 1.63,
+                save: 10
             }, {
-                id: "hw2",
-                name: "ซีลประตู-หน้าต่าง (Door Seal)",
-                desc: "ปิดช่องว่าง กันความร้อนเข้าและกันความเย็นออก รักษาอุณหภูมิห้องให้คงที่",
-                co2PerMonth: 8.0,
-                savePerMonth: 180
+                id: "c5_2",
+                name: "ไส้กุญแจหางปลา (Knaufzylinder)",
+                desc: "ไส้กุญแจพร้อมลูกบิดบิดด้านใน",
+                co2: 2.18,
+                save: 12
+            }, {
+                id: "c5_3",
+                name: "ไส้กุญแจสองคีย์ (Doppelzylinder)",
+                desc: "ไส้กุญแจไขได้สองด้าน ความปลอดภัยสูง",
+                co2: 2.72,
+                save: 15
             }]
         };
 
@@ -2114,11 +2238,11 @@
                 products.forEach(p => {
                     html += `
                     <div class="prod-checkbox-card" data-category="${cat}">
-                        <input type="checkbox" name="c-product-item" id="${p.id}" value="${p.id}" data-name="${p.name}" data-co2="${p.co2PerMonth}" data-save="${p.savePerMonth}">
+                        <input type="checkbox" name="c-product-item" id="${p.id}" value="${p.id}" data-name="${p.name}" data-co2="${p.co2}" data-save="${p.save}" data-cat="${cat}">
                         <label for="${p.id}">
                             <div class="prod-title">${p.name}</div>
-                            <div class="prod-desc">${p.desc}</div>
-                            <div class="prod-eco-tag">🌿 ลด CO₂ ${p.co2PerMonth} kg/เดือน</div>
+                            <div class="prod-desc" style="color: var(--muted);">${p.desc}</div>
+                            <div class="prod-eco-tag">คาร์บอนแฝง ${p.co2} kgCO₂e</div>
                         </label>
                     </div>`;
                 });
@@ -2147,12 +2271,13 @@
             }
 
             let totalBaseCo2 = 0;
-            let totalBaseSave = 0;
-            let itemsHtml = '<div style="color: var(--em); font-weight: 600; margin-bottom: 10px; font-size: 0.9rem;">📦 สินค้าที่ติดตั้ง:</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.8);">';
+            let totalMonthlySave = 0;
+            let itemsHtml = '<div style="color: var(--em); font-weight: 600; margin-bottom: 10px; font-size: 0.9rem;">📦 สินค้าที่เลือก:</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.8);">';
 
             selectedProducts.forEach(prod => {
-                totalBaseCo2 += parseFloat(prod.getAttribute('data-co2'));
-                totalBaseSave += parseFloat(prod.getAttribute('data-save'));
+                const co2 = parseFloat(prod.getAttribute('data-co2'));
+                totalBaseCo2 += co2;
+                totalMonthlySave += parseFloat(prod.getAttribute('data-save'));
                 const pName = prod.getAttribute('data-name');
                 itemsHtml += `<li style="margin-bottom: 6px; display: flex; align-items: start;"><span style="color: var(--em); margin-right: 8px;">✔</span> ${pName}</li>`;
             });
@@ -2165,26 +2290,21 @@
             };
             const m = homeMultipliers[homeType];
 
-            const monthlyMoney = totalBaseSave * m;
-            const monthlyCo2 = totalBaseCo2 * m;
-            const totalCo2 = monthlyCo2 * timeMonths;
-            const totalMoney = monthlyMoney * timeMonths;
+            const totalCo2 = totalBaseCo2 * m;
+            const totalMoney = totalMonthlySave * m * timeMonths;
             const totalTrees = totalCo2 / 1.25;
-            const score = Math.min(Math.round(60 + (totalCo2 * 0.5)), 99);
+            const score = Math.max(100 - Math.round(totalCo2 * 0.5), 20);
 
             document.getElementById('res-placeholder').style.display = 'none';
             document.getElementById('res-content').classList.add('show');
             document.getElementById('res-title').innerText = `ประเมินผลสำหรับ ${roomName}`;
-            document.getElementById('res-time-lbl').innerText = `ระยะเวลา: ${timeMonths} เดือน`;
+            document.getElementById('res-time-lbl').innerText = `ระยะเวลาอ้างอิง: ${timeMonths} เดือน`;
             document.getElementById('res-selected-items').innerHTML = itemsHtml;
+            document.getElementById('res-co2').innerText = totalCo2.toFixed(2);
 
             animateNum('res-trees', totalTrees);
-            animateNum('res-co2', totalCo2);
             animateNum('res-money', totalMoney);
             animateNum('res-score', score);
-            document.getElementById('res-monthly-save').innerText = monthlyMoney.toLocaleString('th-TH', {
-                maximumFractionDigits: 0
-            });
 
             showToast('✅ คำนวณสำเร็จ!');
             if (window.innerWidth <= 768) {
@@ -2196,8 +2316,8 @@
 
         function shareResult() {
             const score = document.getElementById('res-score').textContent;
-            const money = document.getElementById('res-money').textContent;
-            const text = `บ้านของฉันได้ Carbon Score: ${score} คะแนน ประหยัดได้ ฿${money} 🌿 #HäfeleHomeImpact #บ้านเดียวเปลี่ยนโลกได้`;
+            const co2 = document.getElementById('res-co2').textContent;
+            const text = `บ้านของฉันประเมินคาร์บอนแฝงได้: ${co2} kgCO₂e (Carbon Score: ${score}) 🌿 #HäfeleHomeImpact #บ้านเดียวเปลี่ยนโลกได้`;
             if (navigator.clipboard) navigator.clipboard.writeText(text);
             showToast('✅ คัดลอกผลลัพธ์แล้ว! นำไปแชร์ได้เลย');
         }
@@ -2238,6 +2358,32 @@
             document.getElementById('modal-title').innerText = design.title;
             document.getElementById('modal-desc').innerText = design.description + `\n\n👨‍🎨 ออกแบบโดย: ${design.architect} (${design.firm})`;
 
+            // 🟢 เพิ่มรายการสินค้า Hafele ที่ใช้ในผลงานนี้ลงไปใน 3D Modal 
+            let usedProductsHtml = '<h4 style="margin-top: 25px; margin-bottom: 12px; font-size: 1rem; color: var(--jet);">🚪 อุปกรณ์ Häfele ที่เลือกใช้ในผลงาน</h4><div style="display: flex; flex-direction: column; gap: 10px;">';
+
+            // สุ่มดึงสินค้าจาก DB มาโชว์เป็นตัวอย่าง 3 ชิ้น ตามไอดีของดีไซน์เพื่อให้ข้อมูลสอดคล้องกัน
+            const p1 = calcProductsDB["cat1"][id % calcProductsDB["cat1"].length];
+            const p2 = calcProductsDB["cat3"][id % calcProductsDB["cat3"].length];
+            const p3 = calcProductsDB["cat4"][id % calcProductsDB["cat4"].length];
+
+            [p1, p2, p3].forEach(p => {
+                usedProductsHtml += `
+                <div style="background: rgba(0,0,0,0.03); border: 1px solid var(--border); padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--jet); margin-bottom: 2px;">${p.name}</div>
+                        <div style="font-size: 0.8rem; color: var(--muted);">${p.desc}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.75rem; color: var(--muted);">คาร์บอนแฝง</div>
+                        <div style="font-size: 0.9rem; color: var(--em); font-weight: 600;">${p.co2} kgCO₂e</div>
+                    </div>
+                </div>
+                `;
+            });
+            usedProductsHtml += '</div>';
+
+            document.getElementById('modal-hafele-products').innerHTML = usedProductsHtml;
+
             document.getElementById('modal-kwh').innerText = Math.round(monthlyKwh).toLocaleString('th-TH');
             document.getElementById('modal-money').innerText = Math.round(monthlyMoney).toLocaleString('th-TH');
             document.getElementById('modal-co2').innerText = monthlyCo2.toFixed(1);
@@ -2261,39 +2407,59 @@
         }
 
         async function loadKPI() {
-            try {
-                const r = await fetch(API + '/api/kpi');
-                const d = await r.json();
-                if (!d.success) return;
-                const {
-                    kpi,
-                    targets,
-                    top3
-                } = d;
+            // 🟢 จำลองข้อมูล KPI ให้สอดคล้องกับหน้า Admin Dashboard
+            const mockKPI = {
+                totalCalculations: 4854,
+                totalVotes: 18945,
+                totalSubmissions: 86,
+                totalWarranties: 412
+            };
+            const targets = {
+                calculations: 5000,
+                votes: 20000,
+                submissions: 100,
+                warranties: 500
+            };
+            const top3 = [{
+                title: "Minimalist Eco Haven",
+                architect: "Atelier Sustainable",
+                firm: "AS Studio",
+                carbonScore: 85,
+                votes: 8500
+            }, {
+                title: "Comfy Living Interior",
+                architect: "EcoStudio Design",
+                firm: "EcoStudio",
+                carbonScore: 82,
+                votes: 6200
+            }, {
+                title: "Smart Green Space",
+                architect: "Green Arch",
+                firm: "GA Partners",
+                carbonScore: 78,
+                votes: 4245
+            }];
 
-                animateCounter('ctr-calc', kpi.totalCalculations);
-                animateCounter('ctr-votes', kpi.totalVotes);
-                animateCounter('ctr-warranty', kpi.totalWarranties);
+            animateCounter('ctr-calc', mockKPI.totalCalculations);
+            animateCounter('ctr-votes', mockKPI.totalVotes);
+            animateCounter('ctr-warranty', mockKPI.totalWarranties);
 
-                setKPI('k-calc', 'pb-calc', 'pt-calc', kpi.totalCalculations, targets.calculations);
-                setKPI('k-votes', 'pb-votes', 'pt-votes', kpi.totalVotes, targets.votes);
-                setKPI('k-sub', 'pb-sub', 'pt-sub', kpi.totalSubmissions, targets.submissions, true);
-                setKPI('k-war', 'pb-war', 'pt-war', kpi.totalWarranties, targets.warranties, true);
+            setKPI('k-calc', 'pb-calc', 'pt-calc', mockKPI.totalCalculations, targets.calculations);
+            setKPI('k-votes', 'pb-votes', 'pt-votes', mockKPI.totalVotes, targets.votes);
+            setKPI('k-sub', 'pb-sub', 'pt-sub', mockKPI.totalSubmissions, targets.submissions, true);
+            setKPI('k-war', 'pb-war', 'pt-war', mockKPI.totalWarranties, targets.warranties, true);
 
-                const list = document.getElementById('top3List');
-                list.innerHTML = top3.map((d, i) => `
-                <div class="top3-item">
-                    <div class="top3-rank">${['🥇','🥈','🥉'][i]}</div>
-                    <div class="top3-info">
-                    <div class="top3-name">${d.title}</div>
-                    <div class="top3-arch">${d.architect}</div>
-                    </div>
-                    <div class="top3-score">Score ${d.carbonScore}</div>
-                    <div class="top3-votes">${d.votes.toLocaleString()} โหวต</div>
-                </div>`).join('');
-            } catch (e) {
-                console.error('KPI load failed', e);
-            }
+            const list = document.getElementById('top3List');
+            list.innerHTML = top3.map((d, i) => `
+            <div class="top3-item">
+                <div class="top3-rank">${['🥇','🥈','🥉'][i]}</div>
+                <div class="top3-info">
+                <div class="top3-name">${d.title}</div>
+                <div class="top3-arch">${d.architect}</div>
+                </div>
+                <div class="top3-score">Score ${d.carbonScore}</div>
+                <div class="top3-votes">${d.votes.toLocaleString()} โหวต</div>
+            </div>`).join('');
         }
 
         function setKPI(valId, pbId, ptId, val, target, gold) {
@@ -2334,91 +2500,97 @@
         }
 
         async function loadDesigns() {
-            try {
-                const r = await fetch(API + '/api/designs');
-                const d = await r.json();
-                if (!d.success) return;
+            // 🟢 จำลองข้อมูล Gallery
+            const mockDesigns = [{
+                id: 1,
+                title: "Minimalist Eco Haven",
+                architect: "Atelier Sustainable",
+                firm: "AS Studio",
+                carbonScore: 85,
+                votes: 8500,
+                description: "บ้านเดี่ยวที่เน้นการใช้วัสดุและฮาร์ดแวร์ประตูที่ปล่อยคาร์บอนต่ำ",
+                co2Saved: 1250,
+                moneySaved: 85000
+            }, {
+                id: 2,
+                title: "Comfy Living Interior",
+                architect: "EcoStudio Design",
+                firm: "EcoStudio",
+                carbonScore: 82,
+                votes: 6200,
+                description: "ตกแต่งภายในคอนโดโดยใช้ระบบ Smart Home ลดพลังงานแฝง",
+                co2Saved: 950,
+                moneySaved: 62000
+            }, {
+                id: 3,
+                title: "Smart Green Space",
+                architect: "Green Arch",
+                firm: "GA Partners",
+                carbonScore: 78,
+                votes: 4245,
+                description: "ทาวน์โฮมระบบหมุนเวียนอากาศอัจฉริยะ พร้อมบานพับทนทาน",
+                co2Saved: 820,
+                moneySaved: 54000
+            }];
 
-                const grid = document.getElementById('designsGrid');
-                window.currentDesigns = d.designs;
+            const grid = document.getElementById('designsGrid');
+            window.currentDesigns = mockDesigns;
 
-                const models = [
-                    "models/comfy_living_interior_-_cgt_345_final.glb",
-                    "models/duplex.glb",
-                    "models/appartement.glb",
-                    "models/loft_interior_6_for_free.glb",
-                    "models/living_room_interior_free.glb",
-                    "models/Functional Space_Room 30_SKP2013.glb"
-                ];
+            const models = [
+                "models/comfy_living_interior_-_cgt_345_final.glb",
+                "models/duplex.glb",
+                "models/appartement.glb"
+            ];
 
-                grid.innerHTML = d.designs.map((d, i) => {
-                    const modelSrc = models[i % models.length];
+            grid.innerHTML = mockDesigns.map((d, i) => {
+                const modelSrc = models[i % models.length] || "";
 
-                    return `
-                    <div class="design-card">
-                        <div style="height: 240px; background: rgba(0,0,0,0.6); position: relative; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            <model-viewer src="${modelSrc}" alt="${d.title}" camera-controls auto-rotate loading="lazy" shadow-intensity="1" style="width: 100%; height: 100%; outline: none;"></model-viewer>
-                            <div style="position: absolute; top: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; z-index: 10; pointer-events: none;">
-                                <div class="card-rank" style="background: rgba(28,31,34,0.8); padding: 6px 12px; border-radius: 50px; backdrop-filter: blur(4px);">#${i+1} RANK</div>
-                                <div class="card-score-badge" style="background: rgba(227,6,19,0.2); border: 1px solid rgba(227,6,19,0.4); backdrop-filter: blur(4px);"><span>Score ${d.carbonScore}</span></div>
-                            </div>
+                return `
+                <div class="design-card">
+                    <div style="height: 240px; background: rgba(0,0,0,0.6); position: relative; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <model-viewer src="${modelSrc}" alt="${d.title}" camera-controls auto-rotate loading="lazy" shadow-intensity="1" style="width: 100%; height: 100%; outline: none;"></model-viewer>
+                        <div style="position: absolute; top: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; z-index: 10; pointer-events: none;">
+                            <div class="card-rank" style="background: rgba(28,31,34,0.8); padding: 6px 12px; border-radius: 50px; backdrop-filter: blur(4px);">#${i+1} RANK</div>
+                            <div class="card-score-badge" style="background: rgba(227,6,19,0.2); border: 1px solid rgba(227,6,19,0.4); backdrop-filter: blur(4px);"><span>Score ${d.carbonScore}</span></div>
                         </div>
-                        <div class="card-body" style="padding-bottom: 12px;">
-                            <div class="card-title">${d.title}</div>
-                            <div class="card-architect">${d.architect} · ${d.firm}</div>
-                            <div class="card-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;">
-                                ${d.description}
-                            </div>
-                            <div class="card-metrics" style="margin-bottom: 10px;">
-                                <div class="c-metric"><div class="mv">${(d.co2Saved).toLocaleString()}</div><div class="ml">kg CO₂/ปี</div></div>
-                                <div class="c-metric"><div class="mv">฿${(d.moneySaved/1000).toFixed(0)}K</div><div class="ml">ประหยัด/ปี</div></div>
-                            </div>
+                    </div>
+                    <div class="card-body" style="padding-bottom: 12px;">
+                        <div class="card-title">${d.title}</div>
+                        <div class="card-architect">${d.architect} · ${d.firm}</div>
+                        <div class="card-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;">
+                            ${d.description}
                         </div>
-                        <div class="card-footer" style="flex-direction: column; gap: 10px; padding-top: 0;">
-                            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                                <div class="vote-count">❤️ ${d.votes.toLocaleString()} โหวต</div>
-                                <button class="btn-vote ${votedIds.has(d.id)?'voted':''}" id="vbtn-${d.id}" onclick="voteDesign(${d.id},'${d.title}')" ${votedIds.has(d.id)?'disabled':''}>
-                                    ${votedIds.has(d.id)?'โหวตแล้ว':'โหวต ❤️'}
-                                </button>
-                            </div>
-                            <button class="btn-view-3d" style="width: 100%; margin-top: 4px;" onclick="openGalleryDetails(${d.id}, '${modelSrc}')">🔍 ดูรายละเอียด 3D เต็มจอ</button>
+                        <div class="card-metrics" style="margin-bottom: 10px;">
+                            <div class="c-metric"><div class="mv">${(d.co2Saved).toLocaleString()}</div><div class="ml">kg CO₂/ปี</div></div>
+                            <div class="c-metric"><div class="mv">฿${(d.moneySaved/1000).toFixed(0)}K</div><div class="ml">ประหยัด/ปี</div></div>
                         </div>
-                    </div>`;
-                }).join('');
-            } catch (e) {
-                console.error('Designs load failed', e);
-            }
+                    </div>
+                    <div class="card-footer" style="flex-direction: column; gap: 10px; padding-top: 0;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                            <div class="vote-count">❤️ ${d.votes.toLocaleString()} โหวต</div>
+                            <button class="btn-vote ${votedIds.has(d.id)?'voted':''}" id="vbtn-${d.id}" onclick="voteDesign(${d.id},'${d.title}')" ${votedIds.has(d.id)?'disabled':''}>
+                                ${votedIds.has(d.id)?'โหวตแล้ว':'โหวต ❤️'}
+                            </button>
+                        </div>
+                        <button class="btn-view-3d" style="width: 100%; margin-top: 4px;" onclick="openGalleryDetails(${d.id}, '${modelSrc}')">🔍 ดูรายละเอียด 3D เต็มจอ</button>
+                    </div>
+                </div>`;
+            }).join('');
         }
 
         async function voteDesign(designId, title) {
             if (votedIds.has(designId)) return;
-            try {
-                const r = await fetch(API + '/api/vote', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        designId
-                    })
-                });
-                const d = await r.json();
-                if (!d.success) return;
+            // จำลองการกดโหวตสำเร็จ
+            votedIds.add(designId);
+            document.getElementById('votedDesign').textContent = title;
+            document.getElementById('voteCode').textContent = "HFL2026ECO"; // Mock Reward Code
+            openModal('voteModal');
 
-                votedIds.add(designId);
-                document.getElementById('votedDesign').textContent = title;
-                document.getElementById('voteCode').textContent = d.rewardCode;
-                openModal('voteModal');
-
-                const btn = document.getElementById('vbtn-' + designId);
-                if (btn) {
-                    btn.textContent = 'โหวตแล้ว';
-                    btn.classList.add('voted');
-                    btn.disabled = true;
-                }
-                loadKPI();
-            } catch (e) {
-                showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
+            const btn = document.getElementById('vbtn-' + designId);
+            if (btn) {
+                btn.textContent = 'โหวตแล้ว';
+                btn.classList.add('voted');
+                btn.disabled = true;
             }
         }
 
@@ -2434,36 +2606,11 @@
                 return;
             }
 
-            try {
-                const r = await fetch(API + '/api/designs/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        title,
-                        architect,
-                        firm,
-                        homeType,
-                        description
-                    })
-                });
-                const d = await r.json();
-                if (!d.success) {
-                    showToast(d.error || 'เกิดข้อผิดพลาด');
-                    return;
-                }
+            closeModal('submitModal');
+            showToast('✅ ส่งผลงานสำเร็จ! ขอบคุณที่เข้าร่วม');
 
-                closeModal('submitModal');
-                showToast('✅ ส่งผลงานสำเร็จ! ขอบคุณที่เข้าร่วม');
-                loadDesigns();
-                loadKPI();
-
-                ['d-title', 'd-arch', 'd-firm', 'd-desc'].forEach(id => document.getElementById(id).value = '');
-                document.getElementById('d-type').value = '';
-            } catch (e) {
-                showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
-            }
+            ['d-title', 'd-arch', 'd-firm', 'd-desc'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('d-type').value = '';
         }
 
         async function registerWarranty() {
@@ -2472,41 +2619,16 @@
             const email = document.getElementById('w-email').value.trim();
             const productCategory = document.getElementById('w-product').value;
             const productItem = document.getElementById('w-product-item').value;
-            const purchaseDate = document.getElementById('w-date').value;
 
             if (!name || !phone || !productCategory || !productItem) {
                 showToast('กรุณากรอกข้อมูลและเลือกรายการสินค้าให้ครบถ้วน');
                 return;
             }
 
-            try {
-                const r = await fetch(API + '/api/warranty', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name,
-                        phone,
-                        email,
-                        productCategory,
-                        productItem,
-                        purchaseDate
-                    })
-                });
-                const d = await r.json();
-                if (!d.success) {
-                    showToast(d.error || 'เกิดข้อผิดพลาด');
-                    return;
-                }
-
-                document.getElementById('warrantyId').textContent = d.warrantyId;
-                document.getElementById('wPoints').textContent = d.carbonPoints;
-                openModal('warrantyModal');
-                loadKPI();
-            } catch (e) {
-                showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
-            }
+            // จำลองการลงทะเบียนสำเร็จ
+            document.getElementById('warrantyId').textContent = "WARR-" + Math.floor(Math.random() * 90000 + 10000);
+            document.getElementById('wPoints').textContent = 50;
+            openModal('warrantyModal');
         }
 
         function showToast(msg) {
